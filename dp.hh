@@ -1,3 +1,9 @@
+/**
+ * @file dp.hh
+ * Declares the data processing functions and classes used by the
+ * Net class, including a the dp namespace and a simple CSV file manager class.
+ */
+
 #ifndef DP_HH
 #define DP_HH
 
@@ -7,12 +13,17 @@
 #include <iostream>
 
 namespace dp {
+
+    /**
+     * Simple CSV file management class. In general read the file into
+     * a CSV<std::string> class and then convert to CSV<float>  for processing in
+     * neural net.
+     */
     template <typename T>
     class CSV {
-
     public:
-        std::vector< std::string > header;
-        std::vector< std::vector<T> > rows;
+        std::vector< std::string > header; ///< Stores the CSV file header
+        std::vector< std::vector<T> > rows; ///< Stores the CSV rows
     };
 
     CSV<std::string> read_csv(std::istream & is, char delim=',', bool header=false);
@@ -45,7 +56,6 @@ namespace dp {
             }
             patterns.push_back(vec_p);
             size_t k = csv.rows[i].size() - 1;
-            std::cerr << k << ' ' << vec_t.size() << '\n';
             vec_t[k] = (T) 1;
             targets.push_back(vec_t);
         }

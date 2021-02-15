@@ -1,8 +1,18 @@
-nn-release: nn.cc dp.cc nn.hh dp.hh
-	g++ -O3 -Wall nn.cc dp.cc -o nn-release -fopenmp
+CXX       := g++
+CXXFLAGS := -Wall -Wextra -g
 
-nn-release-noomp: nn.cc dp.cc nn.hh dp.hh
-	g++ -O3 -Wall nn.cc dp.cc -o nn-release-noomp
+SRC_CC     := testing.cc nn.cc dp.cc
+SRC_HH   := nn.hh dp.hh
+INCLUDE :=
+LIB     :=
+LIBRARIES   :=
+EXECUTABLE  := nn
 
-nn-debug: nn.cc dp.cc nn.hh dp.hh
-	g++ -g -Wall nn.cc dp.cc -o nn-debug
+
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(SRC_CC) $(SRC_HH)
+	$(CXX) $(CXXFLAGS) $(SRC_CC) -o $(EXECUTABLE)
+
+clean:
+	rm -f *.o $(EXECUTABLE)
