@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+nn-debug
+nn-release
+nn-release-noomp
+nn
+
+# Data files
+*.nn
+*.n
+*.csv
+*.txt
+*.data
+

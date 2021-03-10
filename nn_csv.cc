@@ -5,32 +5,32 @@
  * in nn.hh.
  */
 
-
-#include "dp.hh"
-
 #include <algorithm>
 #include <cassert>
 #include <cctype>
 #include <locale>
 #include <unordered_map>
-#include <iostream>
+
+#include "nn_csv.hh"
+#include "nn_matrix.hh"
+#include "nn_math.hh"
 
 /// Trim from start of string (in place) (Code originally from Stack Exchange)
-void dp::ltrim(std::string &s) {
+void nn::ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
         return !std::isspace(ch);
     }));
 }
 
 /// Trim from end of string (in place) (Code originally from Stack Exchange)
-void dp::rtrim(std::string &s) {
+void nn::rtrim(std::string &s) {
     s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
         return !std::isspace(ch);
     }).base(), s.end());
 }
 
 /// Trim both ends of a string (in place)
-void dp::trim(std::string &s) {
+void nn::trim(std::string &s) {
     ltrim(s);
     rtrim(s);
 }
@@ -45,7 +45,7 @@ void dp::trim(std::string &s) {
  * @param csv The CSV matrix of strings with the column to change.
  * @param col The column number (0-indexed) to convert from labels to integers.
  */
-void dp::convert_csv_col_labels_to_ints(dp::CSV<std::string> & csv, size_t col)
+void nn::convert_csv_col_labels_to_ints(nn::CSV<std::string> & csv, size_t col)
 {
     std::unordered_map<std::string, unsigned int> conversions;
 
@@ -63,6 +63,7 @@ void dp::convert_csv_col_labels_to_ints(dp::CSV<std::string> & csv, size_t col)
     }
 }
 
+
 /**
  * Reads a csv file and returns a CSV class.
  * All blank lines are ignored as well as all lines starting with a #.
@@ -73,14 +74,14 @@ void dp::convert_csv_col_labels_to_ints(dp::CSV<std::string> & csv, size_t col)
  *
  */
 
-dp::CSV<std::string> dp::read_csv(std::istream & is, char delim, bool header)
+nn::CSV<std::string> nn::read_csv(std::istream & is, char delim, bool header)
 {
-    dp::CSV<std::string> csv;
+    nn::CSV<std::string> csv;
     std::string line;
     bool header_processed = false;
 
     while(std::getline(is, line)) {
-        dp::trim(line);
+        nn::trim(line);
         if (line.size() == 0) continue; // Skip blank lines
         if (line[0] == '#') continue; // Skip comment lines
 
